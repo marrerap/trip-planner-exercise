@@ -9,6 +9,9 @@
    <p><% db.forEach((trip) => { %>
     <h2><%= trip.title %> </h2>    
     <a href="/new/<%= trip.id %> ">View Item</a>
+    <form method="POST" action="/delete/<%= trip.id %>">
+      <button type="submit" formaction="/delete/<%= trip.id %>">remove</button>
+    </form>    
 <% }); %></p>
     
     

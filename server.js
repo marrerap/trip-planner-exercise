@@ -1,27 +1,27 @@
 const http = require('http')
 const express = require('express')
 const db = require('./model/trips.js')
-let id = 3;
-
-
-
-
-
 const hostname = '127.0.0.1';
 const port = 3000;
 const app = express();
 
 
+let id = 3;
+
+
 app.set('view engine', 'ejs')
 app.set('views', 'views')
 
-
 const server = http.createServer(app)
-
 
 app.use(express.static('./public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+
+
+
+
 
 app.get("/", (req, res) => {
   res.render('home', {
@@ -35,6 +35,17 @@ app.get("/new", (req, res) => {
     title: "Add a Trip",
   })
 })
+app.post('/delete/:id', (req, res) => {
+  const foundTrip = db.find((trip) => {
+    return trip.id === parseInt(req.params.id)
+  })
+  db.pop(foundTrip)
+  console.log(' it is removed!!')
+  res.redirect('/')
+  
+  
+})
+
 app.post('/new', (req, res) => {
   const newTrip = {
     id: id++,
@@ -46,6 +57,7 @@ app.post('/new', (req, res) => {
   console.log('New trip Received', newTrip)
   res.redirect('/')
 })
+
 app.get("/new/:id", (req, res) => {
   // get data from the db.specials
   const foundTrip = db.find((trip) => {
@@ -57,10 +69,6 @@ app.get("/new/:id", (req, res) => {
     trip: foundTrip
   })
 })
-
-
-
-
 
 app.get('/*', (req, res) => {
   res.status(404)
