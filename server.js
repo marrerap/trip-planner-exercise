@@ -35,16 +35,6 @@ app.get("/new", (req, res) => {
     title: "Add a Trip",
   })
 })
-app.post('/delete/:id', (req, res) => {
-  const foundTrip = db.find((trip) => {
-    return trip.id === parseInt(req.params.id)
-  })
-  db.pop(foundTrip)
-  console.log(' it is removed!!')
-  res.redirect('/')
-  
-  
-})
 
 app.post('/new', (req, res) => {
   const newTrip = {
@@ -57,6 +47,20 @@ app.post('/new', (req, res) => {
   console.log('New trip Received', newTrip)
   res.redirect('/')
 })
+
+
+app.post('/delete/:id', (req, res) => {
+  const foundTrip = db.find((trip) => {
+    return trip.id === parseInt(req.params.id)
+  })
+  db.pop(foundTrip)
+  console.log(' it is removed!!')
+  res.redirect('/')
+  
+  
+})
+
+
 
 app.get("/new/:id", (req, res) => {
   // get data from the db.specials
