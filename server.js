@@ -30,6 +30,18 @@ app.get("/", (req, res) => {
 
 })
 
+
+app.post('/delete/:id', (req, res) => {
+  const foundTrip = db.find((trip) => {
+    return trip.id === parseInt(req.params.id)
+  })
+  db.pop(foundTrip)
+  console.log(' it is removed!!')
+  res.redirect('/')
+  
+  
+})
+
 app.get("/new", (req, res) => {
   res.render('new', {
     title: "Add a Trip",
@@ -48,20 +60,6 @@ app.post('/new', (req, res) => {
   res.redirect('/')
 })
 
-
-app.post('/delete/:id', (req, res) => {
-  const foundTrip = db.find((trip) => {
-    return trip.id === parseInt(req.params.id)
-  })
-  db.pop(foundTrip)
-  console.log(' it is removed!!')
-  res.redirect('/')
-  
-  
-})
-
-
-
 app.get("/new/:id", (req, res) => {
   // get data from the db.specials
   const foundTrip = db.find((trip) => {
@@ -73,6 +71,12 @@ app.get("/new/:id", (req, res) => {
     trip: foundTrip
   })
 })
+
+
+
+
+
+
 
 app.get('/*', (req, res) => {
   res.status(404)
